@@ -1,3 +1,3 @@
-module ImdbVoteHistory
+class ImdbVoteHistory
   
 end

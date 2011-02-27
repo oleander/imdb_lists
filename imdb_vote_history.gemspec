@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "imdb_vote_history/version"
 
 Gem::Specification.new do |s|
   s.name        = "imdb_vote_history"
-  s.version     = ImdbVoteHistory::VERSION
+  s.version     = "0.0.1"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleande.nu"]
