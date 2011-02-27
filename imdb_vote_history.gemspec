@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleande.nu"]
-  s.homepage    = ""
-  s.summary     = %q{Get easy access to all your movies on the imdb vote history page}
-  s.description = %q{Get easy access to all your movies on the imdb vote history page using Ruby}
+  s.homepage    = "https://github.com/oleander/imdb_vote_history"
+  s.summary     = %q{Get access to all your movies on the imdb vote history page}
+  s.description = %q{Get access to all your movies on the imdb vote history page using Ruby}
 
   s.rubyforge_project = "imdb_vote_history"
 
