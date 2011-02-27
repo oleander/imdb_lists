@@ -1,7 +1,7 @@
 require "movie_searcher"
 
 module Container
-  class Movie < MovieSearcher    
+  class Movie
     def initialize(args)
       args.keys.each { |name| instance_variable_set "@" + name.to_s, args[name] }
     end
