@@ -7,7 +7,7 @@ module Container
     end
     
     def method_missing(method, *args)
-      return movie.send(method, *args) if exists? and movie.methods.include?(method.to_s)
+      return movie.send(method, *args) if exists? and movie.methods.include?(prepare(method))
       raise exists? ? NoMethodError.new : ArgumentError.new("The imdb #{imdb_id} is invalid")
     end
     
@@ -30,6 +30,10 @@ module Container
     private
       def movie
         @movie ||= MovieSearcher.find_movie_by_id(imdb_id)
+      end
+      
+      def prepare(method)
+        RUBY_VERSION.to_s.match(/1\.9/) ? method.to_sym : method.to_s
       end
   end
 end
