@@ -1,3 +1,3 @@
 module ImdbVoteHistory
-  # Your code goes here...
+  
 end

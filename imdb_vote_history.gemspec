@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "imdb_vote_history"
   s.version     = ImdbVoteHistory::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Linus Oleander"]
+  s.email       = ["linus@oleande.nu"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Get easy access to all your movies on the imdb vote history page}
+  s.description = %q{Get easy access to all your movies on the imdb vote history page using Ruby}
 
   s.rubyforge_project = "imdb_vote_history"
 
