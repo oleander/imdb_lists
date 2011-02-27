@@ -1,4 +1,5 @@
 require "rspec"
+require "webmock/rspec"
 require "imdb_vote_history"
 
 RSpec.configure do |config|
