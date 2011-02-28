@@ -1,0 +1,63 @@
+# Imdb Vote History
+
+Get access to all your movies on the imdb vote history page.
+
+## How to use
+
+### Find by url
+
+    $ result = ImdbVoteHistory.find_by_url("http://www.imdb.com/mymovies/list?l=32558051")
+    
+    $ result.movies.count
+    >> 937
+    
+    $ result.user
+    >> "eddyproca" # Not me :)
+    
+    $ result.movies.last.title
+    >> "The Last Man on Earth"
+    
+    $ result.class
+    >> ImdbVoteHistory
+    
+    $ result.movies.first.class
+    >> Container::Movie
+    
+### Find by id
+
+    $ result = ImdbVoteHistory.find_by_id("32558051")
+    
+    $ result.movies.count
+    >> 937
+    
+## Data to work with
+
+### The ImdbVoteHistory class
+
+The class has few accessors that might be useful.
+
+- **user** (String) The owner/creator of the list.
+- **id** (Fixnum) A unique id for the list
+- **movies** (Array) A list of movies containing [MovieSearcher](https://github.com/oleander/MovieSearcher) instances.
+
+### A list of movies (a.k.a the Container::Movie class)
+
+The list of movies that is being returned by the `movies` method makes if possible to fetch usable data from IMDB.
+
+Read more about the API [here](https://github.com/oleander/MovieSearcher).
+
+## How do install
+
+    [sudo] gem install imdb_vote_history
+    
+## How to use it in a rails 3 project
+
+Add `gem 'imdb_vote_history'` to your Gemfile and run `bundle`.
+
+## Requirements
+
+*IMDB Vote History* is tested in OS X 10.6.6 using Ruby 1.9.2 and 1.8.7.
+
+## License
+
+*IMDB Vote History* is released under the MIT license.
