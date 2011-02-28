@@ -15,6 +15,8 @@ class ImdbVoteHistory
   def initialize(url)
     raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}/)
     @url = url
+    @movies = []
+    @page = 0
   end
   
   def download
@@ -33,12 +35,22 @@ class ImdbVoteHistory
     @url.match(/list\?l=(\d+)/).to_a[1].to_i
   end
   
+  def url
+    "#{@url}&o=#{page}"
+  end
+  
+  def page
+    org = @page
+    @page += 10
+    org
+  end
+  
   def content 
     @content ||= Nokogiri::HTML download
   end
   
   def done?
-    total_results == current_results
+    not content.content.empty? and total_results == current_results
   end
   
   def total_results
@@ -57,16 +69,25 @@ class ImdbVoteHistory
     content.at_css("tr:nth-child(2) .standard b:nth-child(1)").content.match(/(\d+)-(\d+)/)
   end
   
+  def all
+    @all = self
+  end
+  
+  def movies
+    prepare! if @all
+    
+    @movies
+  end
+  
   def prepare!
-    return @movies unless @movies.nil?
-    
-    @movies = []
-    
+    return @movies if not @movies.empty? and not @all
+        
     content.css("td.standard a").each do |movie|
       movie = Container::Movie.new(:imdb_link => movie.attr("href"))
       @movies << movie if movie.valid?
     end
     
+    prepare! if not done? and @all
     return self
   end
 end

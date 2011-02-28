@@ -60,7 +60,7 @@ describe ImdbVoteHistory do
   
   context "the find_by_id method" do
     it "should be possible to pass an id" do
-      [0, nil, ""].each do |id|
+      [0, nil, "", "0"].each do |id|
         lambda { ImdbVoteHistory.find_by_id(id) }.should raise_error(ArgumentError)
       end
       
@@ -83,5 +83,15 @@ describe ImdbVoteHistory do
     it "should know how many results that are shown" do
       ImdbVoteHistory.find_by_url(@pagination_url).results.should eq(10)
     end
+    
+    it "should be possible to step" do
+      ivh = ImdbVoteHistory.find_by_url(@pagination_url)
+      10.times do
+        lambda { ivh }.should change(ivh, :page).by(10)
+      end
+    end
+    # it "should be possible to get all results" do
+    #    ImdbVoteHistory.find_by_url(@pagination_url).all.should have(560).movies
+    #  end
   end
 end
