@@ -69,4 +69,19 @@ describe ImdbVoteHistory do
       end
     end
   end
+  
+  context "pagination" do
+    before(:each) do
+      @pagination_url = "http://www.imdb.com/mymovies/list?l=19736607"
+      stub_request(:any, @pagination_url).to_return(:body => File.new("spec/fixtures/pagination.html"), :status => 200)
+    end
+    
+    it "should know when there is more to come" do
+      ImdbVoteHistory.find_by_url(@pagination_url).should_not be_done
+    end
+    
+    it "should know how many results that are shown" do
+      ImdbVoteHistory.find_by_url(@pagination_url).results.should eq(10)
+    end
+  end
 end
