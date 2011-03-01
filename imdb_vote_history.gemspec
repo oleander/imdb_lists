@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleande.nu"]
   s.homepage    = "https://github.com/oleander/imdb_vote_history"
-  s.summary     = %q{Get access to all movies on your imdb vote history page}
-  s.description = %q{Get access to all movies on your imdb vote history page using Ruby}
+  s.summary     = %q{Access all movies on any public Imdb vote history page}
+  s.description = %q{Access all movies on any public Imdb vote history page using Ruby}
 
   s.rubyforge_project = "imdb_vote_history"
 

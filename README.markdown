@@ -1,8 +1,8 @@
 # Imdb Vote History
 
-Get access to all movies on your imdb vote history page.
+Access all movies on any public Imdb vote history page.
 
-[Here](http://www.imdb.com/mymovies/list?l=19736607) is an example of a imdb vote history, not mine tho. 
+[Here](http://www.imdb.com/mymovies/list?l=19736607) is an example of a list, not mine tho. 
 
 ## How to use
 
