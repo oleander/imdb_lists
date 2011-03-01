@@ -86,18 +86,22 @@ describe ImdbVoteHistory do
     
     it "should be possible to step" do
       ivh = ImdbVoteHistory.find_by_url(@pagination_url)
-      10.times do
-        lambda { ivh }.should change(ivh, :step!).by(10)
-      end
+      10.times { lambda { ivh }.should change(ivh, :step!).by(10) }
     end
     
     it "should be possible to get all results" do
-      WebMock.reset!
-      rest_client("http://www.imdb.com/mymovies/list?l=19736607", "pagination") # First page
-      rest_client("http://www.imdb.com/mymovies/list?l=19736607&o=560", "pagination_end") # Last page
+      rest_client("http://www.imdb.com/mymovies/list?l=19736607", "pagination")                                              # First page
+      rest_client("http://www.imdb.com/mymovies/list?l=19736607&o=560", "pagination_end")                                    # Last page
       (10..550).step(10).each { |page| rest_client("http://www.imdb.com/mymovies/list?l=19736607&o=#{page}", "pagination") } # Everything in between
       
       ImdbVoteHistory.find_by_url(@pagination_url).all.should have(560).movies
+    end
+    
+    it "should not step when all movies is being displayed on the first page" do
+      stub_request(:get, @url).to_return(:body => File.new("spec/fixtures/32558051.html"), :status => 200)
+      
+      ImdbVoteHistory.find_by_url(@url).all.should have(@count).movies
+      a_request(:get, @url).should have_been_made.times(1)
     end
   end
 end

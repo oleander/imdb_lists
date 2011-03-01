@@ -56,6 +56,26 @@ class ImdbVoteHistory
     @all = self
   end
   
+  def done?
+    not content.content.empty? and total_results == current_results
+  end
+  
+  def total_results
+    content.at_css(".standard:nth-child(1)").content.match(/: (\d+)/).to_a[1]
+  end
+
+  def results
+    current_results.to_i - current_display[1].to_i + 1
+  end
+
+  def current_results
+    current_display[2]
+  end
+
+  def current_display
+    content.at_css("tr:nth-child(2) .standard b:nth-child(1)").content.match(/(\d+)-(\d+)/)
+  end
+     
   def movies
     prepare! if !@movies.any?; @movies
   end
@@ -66,6 +86,6 @@ class ImdbVoteHistory
       movies << movie if movie.valid?
     end
         
-    @movies += movies; prepare! if @all and movies.any? and step!
+    @movies += movies; prepare! if @all and movies.any? and step! and not done?
   end
 end
