@@ -109,7 +109,7 @@ describe ImdbVoteHistory do
     it "should be possible to set a page" do
       stub_request(:get, @url).to_return(:body => File.new("spec/fixtures/32558051.html"), :status => 200)
       
-      ImdbVoteHistory.find_by_url("http://www.imdb.com/mymovies/list?l=19736607&o=40").page(4).movies
+      ImdbVoteHistory.find_by_url("http://www.imdb.com/mymovies/list?l=19736607").page(4).movies
       a_request(:get, "http://www.imdb.com/mymovies/list?l=19736607&o=40").should have_been_made.times(1)
     end
   end

@@ -8,7 +8,7 @@ class ImdbVoteHistory
   # Example on valid URL:
   # => http://www.imdb.com/mymovies/list?l=32558051
   def initialize(url)
-    raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}/)
+    raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
     @page    = 0
     @movies  = []
     @url     = url
