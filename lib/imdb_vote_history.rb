@@ -13,16 +13,17 @@ class ImdbVoteHistory
   
   def initialize(url)
     raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}/)
-    @page = 0
-    @movies = []
-    @url = url
+    @page    = 0
+    @movies  = []
+    @url     = url
+    @content = {}
   end
   
   def user
     begin
       content.at_css(".blurb a:nth-child(1)").content
     rescue NoMethodError
-      "" # The default value if no user i found
+      nil # The default value if no user i found
     end
   end
   
@@ -39,7 +40,7 @@ class ImdbVoteHistory
   end
      
   def movies
-    prepare! if !@movies.any?; @movies
+    prepare! unless @movies.any?; @movies
   end
   
   private
@@ -85,7 +86,6 @@ class ImdbVoteHistory
     end
 
     def content
-      @content = {} if @content.nil?
       @content[@page] ||= Nokogiri::HTML download
     end
 end

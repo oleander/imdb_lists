@@ -54,7 +54,7 @@ describe ImdbVoteHistory do
     end
     
     it "should return an empty user" do
-      ImdbVoteHistory.find_by_url(@url).user.should eq("")
+      ImdbVoteHistory.find_by_url(@url).user.should be_nil
     end
   end
   
@@ -102,6 +102,15 @@ describe ImdbVoteHistory do
       
       ImdbVoteHistory.find_by_url(@url).all.should have(@count).movies
       a_request(:get, @url).should have_been_made.times(1)
+    end
+  end
+  
+  context "the page method" do
+    it "should be possible to set a page" do
+      stub_request(:get, @url).to_return(:body => File.new("spec/fixtures/32558051.html"), :status => 200)
+      
+      ImdbVoteHistory.find_by_url("http://www.imdb.com/mymovies/list?l=19736607&o=40").page(4).movies
+      a_request(:get, "http://www.imdb.com/mymovies/list?l=19736607&o=40").should have_been_made.times(1)
     end
   end
 end
