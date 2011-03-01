@@ -28,6 +28,9 @@ Access all movies on any public Imdb vote history page.
     $ result.movies.first.class
     >> Container::Movie
     
+    $ result.movies.last.actors.first.name
+    >> "Vincent Price"
+    
 ### Find by id
 
     $ result = ImdbVoteHistory.find_by_id("32558051")
