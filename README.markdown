@@ -62,6 +62,10 @@ Add `gem 'imdb_vote_history'` to your Gemfile and run `bundle`.
 
 *IMDB Vote History* is tested in OS X 10.6.6 using Ruby 1.9.2 and 1.8.7.
 
+## Thanks to
+
+[Chicago_gangster](http://www.imdb.com/user/ur13279695/boards/profile/) for solving the [pagination problem](http://www.imdb.com/board/bd0000041/thread/178983592?d=178983592&p=1#178983592).
+
 ## License
 
 *IMDB Vote History* is released under the MIT license.
