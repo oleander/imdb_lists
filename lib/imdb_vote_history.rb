@@ -3,14 +3,10 @@ require "rest-client"
 require "imdb_vote_history/container"
 
 class ImdbVoteHistory
-  def self.find_by_url(url)
-    ImdbVoteHistory.new(url)
-  end
-  
-  def self.find_by_id(id)
-    find_by_url("http://www.imdb.com/mymovies/list?l=#{id}")
-  end
-  
+  # Ingoing argument is the url to fetch movies from.
+  # Must be valid, otherwise an argument error will be raised.
+  # Example on valid URL:
+  # => http://www.imdb.com/mymovies/list?l=32558051
   def initialize(url)
     raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}/)
     @page    = 0
@@ -19,6 +15,21 @@ class ImdbVoteHistory
     @content = {}
   end
   
+  # Fetches movies for the given URL.
+  # Raises an exception if the url is invalid.
+  # Returns and ImdbVoteHistory object.
+  def self.find_by_url(url)
+    ImdbVoteHistory.new(url)
+  end
+  
+  # Fetches movies for the given ID.
+  # Raises an exception if the url is invalid.
+  # Returns and ImdbVoteHistory object.
+  def self.find_by_id(id)
+    find_by_url("http://www.imdb.com/mymovies/list?l=#{id}")
+  end
+  
+  # The owners username, nil if the page doesn't exists.
   def user
     begin
       content.at_css(".blurb a:nth-child(1)").content
@@ -27,18 +38,24 @@ class ImdbVoteHistory
     end
   end
   
+  # A unique id for this particular list.
+  # Return type is Fixnum.
   def id
     url.match(/list\?l=(\d+)/).to_a[1].to_i
   end
   
+  # Fetches the {value} page.
+  # Take one argument, of type Fixnum.
   def page(value)
     @page = value * 10; self
   end
   
+  # Should we fetch all movies, even though pagination exists?
   def all
     @all = self
   end
-     
+  
+  # Returns a list of movies of the Container::Movie type.
   def movies
     prepare! unless @movies.any?; @movies
   end
