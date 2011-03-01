@@ -8,6 +8,9 @@ Get access to all movies on your imdb vote history page.
 
 ### Find by url
 
+    $ require 'rubygems'
+    $ require 'imdb_vote_history'
+    
     $ result = ImdbVoteHistory.find_by_url("http://www.imdb.com/mymovies/list?l=32558051")
     
     $ result.movies.count
@@ -32,23 +35,29 @@ Get access to all movies on your imdb vote history page.
     $ result.movies.count
     >> 937
     
-## What data to with with
+## Data to work with
 
 ### The ImdbVoteHistory class
 
-When you use the `find_by_url` of `find_by_id` method a `ImdbVoteHistory` object will be returned.
+When you use the `find_by_url` and `find_by_id` method a `ImdbVoteHistory` object gets returned.
 
-The class it self has some few accessors that might be useful.
+The object it self has a few accessors that might be useful.
 
 - **user** (String) The owner/creator of the list.
 - **id** (Fixnum) A unique id for the list
 - **movies** (Array<Container::Movie>) A list of movies containing `Container::Movie` instances.
 
-### A list of movies (a.k.a the Container::Movie class)
+### The Container::Movie class
 
-The list of movies that is being returned by the `movies` method makes it's possible to fetch usable data from [IMDB](http://www.imdb.com/).
+The `movies` method returns a list of `Container::Movie` objects, each object has two methods that returns information about the movie without doing another request to [IMDb](http://www.imdb.com/).
 
-Read more about the API [here](https://github.com/oleander/MovieSearcher).
+If you for example want to get the title of the movie you can apply the accessors that is being described [here](https://github.com/oleander/MovieSearcher).
+Scroll down to the `ImdbParty::Movie` part to get information about the available accessors.
+
+- **imdb_link** (String) The full URL to the IMDB page.
+- **imdb_id** (String) The IMDB ID for the movie.
+
+You can, as said above, use any method that `ImdbParty::Movie` provides directly from the `Container::Movie` object, like *title*, *year* and *actors*.
 
 ## How do install
 
