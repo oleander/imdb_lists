@@ -74,4 +74,22 @@ describe ImdbVoteHistory do
       end
     end
   end
+  
+  context "a non public list" do
+    before(:each) do
+       stub_request(:get, "#{@url}&a=1").to_return(:body => File.new("spec/fixtures/non_public.html"), :status => 200)
+     end
+     
+    it "should return an empty list" do
+      ImdbVoteHistory.find_by_url(@url).should have(0).movies
+    end
+    
+    it "should not have a user" do
+      ImdbVoteHistory.find_by_url(@url).user.should be_nil
+    end
+    
+    it "should have an id" do
+      ImdbVoteHistory.find_by_url(@url).id.should eq(32558051)
+    end
+  end
 end
