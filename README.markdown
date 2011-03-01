@@ -1,6 +1,8 @@
 # Imdb Vote History
 
-Get access to all your movies on the imdb vote history page.
+Get access to all movies on your imdb vote history page.
+
+[Here](http://www.imdb.com/mymovies/list?l=19736607) is an example of a imdb vote history, not mine tho. 
 
 ## How to use
 
@@ -30,19 +32,21 @@ Get access to all your movies on the imdb vote history page.
     $ result.movies.count
     >> 937
     
-## Data to work with
+## What data to with with
 
 ### The ImdbVoteHistory class
 
-The class has few accessors that might be useful.
+When you use the `find_by_url` of `find_by_id` method a `ImdbVoteHistory` object will be returned.
+
+The class it self has some few accessors that might be useful.
 
 - **user** (String) The owner/creator of the list.
 - **id** (Fixnum) A unique id for the list
-- **movies** (Array) A list of movies containing [MovieSearcher](https://github.com/oleander/MovieSearcher) instances.
+- **movies** (Array<Container::Movie>) A list of movies containing `Container::Movie` instances.
 
 ### A list of movies (a.k.a the Container::Movie class)
 
-The list of movies that is being returned by the `movies` method makes if possible to fetch usable data from IMDB.
+The list of movies that is being returned by the `movies` method makes it's possible to fetch usable data from [IMDB](http://www.imdb.com/).
 
 Read more about the API [here](https://github.com/oleander/MovieSearcher).
 
