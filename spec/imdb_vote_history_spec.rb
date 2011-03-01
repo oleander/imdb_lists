@@ -71,27 +71,33 @@ describe ImdbVoteHistory do
   end
   
   context "pagination" do
+    def rest_client(url, file)
+      RestClient.should_receive(:get).with(url, {:timeout=>10}).and_return(File.new("spec/fixtures/#{file}.html"))
+    end
+    
     before(:each) do
       @pagination_url = "http://www.imdb.com/mymovies/list?l=19736607"
       stub_request(:any, @pagination_url).to_return(:body => File.new("spec/fixtures/pagination.html"), :status => 200)
     end
     
-    it "should know when there is more to come" do
-      ImdbVoteHistory.find_by_url(@pagination_url).should_not be_done
-    end
-    
     it "should know how many results that are shown" do
-      ImdbVoteHistory.find_by_url(@pagination_url).results.should eq(10)
+      ImdbVoteHistory.find_by_url(@pagination_url).should have(10).movies
     end
     
     it "should be possible to step" do
       ivh = ImdbVoteHistory.find_by_url(@pagination_url)
       10.times do
-        lambda { ivh }.should change(ivh, :page).by(10)
+        lambda { ivh }.should change(ivh, :step!).by(10)
       end
     end
-    # it "should be possible to get all results" do
-    #    ImdbVoteHistory.find_by_url(@pagination_url).all.should have(560).movies
-    #  end
+    
+    it "should be possible to get all results" do
+      WebMock.reset!
+      rest_client("http://www.imdb.com/mymovies/list?l=19736607", "pagination") # First page
+      rest_client("http://www.imdb.com/mymovies/list?l=19736607&o=560", "pagination_end") # Last page
+      (10..550).step(10).each { |page| rest_client("http://www.imdb.com/mymovies/list?l=19736607&o=#{page}", "pagination") } # Everything in between
+      
+      ImdbVoteHistory.find_by_url(@pagination_url).all.should have(560).movies
+    end
   end
 end

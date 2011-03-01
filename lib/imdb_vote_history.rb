@@ -5,22 +5,27 @@ require "imdb_vote_history/container"
 class ImdbVoteHistory
   attr_accessor :movies
   def self.find_by_url(url)
-    ImdbVoteHistory.new(url).prepare!
+    ImdbVoteHistory.new(url)
   end
   
   def self.find_by_id(id)
-    self.find_by_url("http://www.imdb.com/mymovies/list?l=#{id}")
+    find_by_url("http://www.imdb.com/mymovies/list?l=#{id}")
   end
   
   def initialize(url)
     raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}/)
-    @url = url
-    @movies = []
     @page = 0
+    @movies = []
+    @url = url
   end
   
   def download
-    @download ||= RestClient.get(@url, :timeout => 10) rescue ""
+    RestClient.get(url, :timeout => 10) rescue ""
+  end
+  
+  def content
+    @content = {} if @content.nil?
+    @content[@page] ||= Nokogiri::HTML download
   end
   
   def user
@@ -32,41 +37,19 @@ class ImdbVoteHistory
   end
   
   def id
-    @url.match(/list\?l=(\d+)/).to_a[1].to_i
+    url.match(/list\?l=(\d+)/).to_a[1].to_i
   end
   
   def url
-    "#{@url}&o=#{page}"
+    @page.zero? ? @url : "#{@url}&o=#{@page}"
   end
   
-  def page
-    org = @page
+  def page(value)
+    @page = value * 10; self
+  end
+  
+  def step!
     @page += 10
-    org
-  end
-  
-  def content 
-    @content ||= Nokogiri::HTML download
-  end
-  
-  def done?
-    not content.content.empty? and total_results == current_results
-  end
-  
-  def total_results
-    content.at_css(".standard:nth-child(1)").content.match(/: (\d+)/).to_a[1]
-  end
-  
-  def results
-    current_results.to_i - current_display[1].to_i + 1
-  end
-  
-  def current_results
-    current_display[2]
-  end
-  
-  def current_display
-    content.at_css("tr:nth-child(2) .standard b:nth-child(1)").content.match(/(\d+)-(\d+)/)
   end
   
   def all
@@ -74,20 +57,15 @@ class ImdbVoteHistory
   end
   
   def movies
-    prepare! if @all
-    
-    @movies
+    prepare! if !@movies.any?; @movies
   end
   
   def prepare!
-    return @movies if not @movies.empty? and not @all
-        
-    content.css("td.standard a").each do |movie|
+    movies = []; content.css("td.standard a").each do |movie|
       movie = Container::Movie.new(:imdb_link => movie.attr("href"))
-      @movies << movie if movie.valid?
+      movies << movie if movie.valid?
     end
-    
-    prepare! if not done? and @all
-    return self
+        
+    @movies += movies; prepare! if @all and movies.any? and step!
   end
 end
