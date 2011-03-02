@@ -1,8 +1,8 @@
 # IMDb Vote History
 
-Access all movies on any public IMDb vote history page.
+Get easy access to any public [IMDb](http://www.imdb.com/) vote history list using Ruby.
 
-[Here](http://www.imdb.com/mymovies/list?l=19736607) is an example of a list, not mine tho. 
+[Here](http://www.imdb.com/mymovies/list?l=19736607) is an example.
 
 ## How to use
 

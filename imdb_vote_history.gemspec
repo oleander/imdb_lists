@@ -3,13 +3,13 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "imdb_vote_history"
-  s.version     = "0.0.1"
+  s.version     = "1.0.0"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleande.nu"]
   s.homepage    = "https://github.com/oleander/imdb_vote_history"
-  s.summary     = %q{Access all movies on any public Imdb vote history page}
-  s.description = %q{Access all movies on any public Imdb vote history page using Ruby}
+  s.summary     = %q{Get easy access to any public IMDb vote history list using Ruby}
+  s.description = %q{Get easy access to any public IMDb vote history list. Extract information from each movie like; title, release date, rating, actors.}
 
   s.rubyforge_project = "imdb_vote_history"
 
