@@ -42,7 +42,7 @@ Get easy access to any public [IMDb](http://www.imdb.com/) vote history list usi
 
 ### The ImdbVoteHistory class
 
-When you use the `find_by_url` and `find_by_id` method a `ImdbVoteHistory` object gets returned.
+The `find_by_url` and `find_by_id` methods returns an `ImdbVoteHistory` instance.
 
 The object it self has a few accessors that might be useful.
 
