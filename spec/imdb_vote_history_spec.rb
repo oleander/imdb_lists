@@ -1,6 +1,7 @@
 describe ImdbVoteHistory do
   before(:all) do
     @url          = "http://www.imdb.com/mymovies/list?l=32558051"
+    @id           = "32558051" 
     @valid_urls   = ["http://imdb.com/mymovies/list?l=123431", "imdb.com/mymovies/list?l=3212312351", "www.imdb.com/mymovies/list?l=31231251"]
     @invalid_urls = ["http://www.imdb.com/mymovieslist?l=32558051", "mymovieslist?l=32558051", "http://www.imdb.com/mymovieslist?l=32558abc051"]
     @count        = 937
@@ -35,7 +36,12 @@ describe ImdbVoteHistory do
     end
     
     it "should contain a list of movies" do
-      ImdbVoteHistory.find_by_url(@url).movies.all? {|m| m.should be_instance_of(Container::Movie) }
+      ImdbVoteHistory.find_by_url(@url).movies.all? { |m| m.should be_instance_of(Container::Movie) }
+    end
+    
+    it "should have an url method" do
+      ImdbVoteHistory.find_by_id(@id).url.should eq(@url)
+      ImdbVoteHistory.find_by_url(@url).url.should eq(@url)
     end
     
     it "should raise an exception if the url is invalid" do

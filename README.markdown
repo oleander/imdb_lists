@@ -46,8 +46,9 @@ When you use the `find_by_url` and `find_by_id` method a `ImdbVoteHistory` objec
 
 The object it self has a few accessors that might be useful.
 
-- **user** (String) The owner/creator of the list.
-- **id** (Fixnum) A unique id for the list
+- **user** (String) Owner of the list.
+- **id** (Fixnum) A unique id for the list.
+- **url** (String) Full URL to the IMDb vote history list that was used. 
 - **movies** (Array<Container::Movie>) A list of movies containing `Container::Movie` instances.
 
 ### The Container::Movie class
@@ -57,8 +58,8 @@ The `movies` method returns a list of `Container::Movie` objects, each object ha
 If you for example want to get the title of the movie you can apply the accessors that is being described [here](https://github.com/oleander/MovieSearcher).
 Scroll down to the `ImdbParty::Movie` part to get information about the available accessors.
 
-- **imdb_link** (String) The full URL to the IMDB page.
-- **imdb_id** (String) The IMDB ID for the movie.
+- **imdb_link** (String) The full URL to the IMDb page.
+- **imdb_id** (String) The IMDb ID for the movie.
 
 You can, as said above, use any method that `ImdbParty::Movie` provides directly from the `Container::Movie` object, like *title*, *year* and *actors*.
 
@@ -72,7 +73,7 @@ Add `gem 'imdb_vote_history'` to your Gemfile and run `bundle`.
 
 ## Requirements
 
-*IMDB Vote History* is tested in OS X 10.6.6 using Ruby 1.9.2 and 1.8.7.
+*IMDb Vote History* is tested in OS X 10.6.6 using Ruby 1.9.2 and 1.8.7.
 
 ## Thanks to
 
@@ -80,4 +81,4 @@ Add `gem 'imdb_vote_history'` to your Gemfile and run `bundle`.
 
 ## License
 
-*IMDB Vote History* is released under the MIT license.
+*IMDb Vote History* is released under the MIT license.

@@ -3,6 +3,7 @@ require "rest-client"
 require "imdb_vote_history/container"
 
 class ImdbVoteHistory
+  attr_reader :url
   # Ingoing argument is the url to fetch movies from.
   # Must be valid, otherwise an argument error will be raised.
   # Example on valid URL:
@@ -10,7 +11,7 @@ class ImdbVoteHistory
   def initialize(url)
     raise ArgumentError.new("The url #{@url} is invalid") unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
     @movies = []
-    @url    = "#{url}&a=1"
+    @url    = url
   end
   
   # Fetches movies for the given URL.
@@ -60,8 +61,12 @@ class ImdbVoteHistory
       end
     end
     
+    def inner_url
+      "#{@url}&a=1"
+    end
+    
     def download
-      RestClient.get(@url, :timeout => 10) rescue ""
+      RestClient.get(inner_url, :timeout => 10) rescue ""
     end
 
     def content
