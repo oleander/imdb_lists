@@ -48,7 +48,7 @@ The object it self has a few accessors that might be useful.
 
 - **user** (String) Owner of the list.
 - **id** (Fixnum) A unique id for the list.
-- **url** (String) Full URL to the IMDb vote history list that was used. 
+- **url** (String) Full URL to the IMDb vote history list that was parsed.
 - **movies** (Array<Container::Movie>) A list of movies containing `Container::Movie` instances.
 
 ### The Container::Movie class
