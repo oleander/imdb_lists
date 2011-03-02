@@ -4,28 +4,28 @@ require "imdb_vote_history/container"
 
 class ImdbVoteHistory
   attr_reader :url
-  # Ingoing argument is the url to fetch movies from.
-  # Must be valid, otherwise an argument error will be raised.
-  # Example on valid URL:
-  # => http://www.imdb.com/mymovies/list?l=32558051
-  def initialize(url)
-    raise ArgumentError.new("The url #{@url} is invalid") unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
+  
+  # Ingoing argument is the id to fetch movies from.
+  def initialize(id)
     @movies = []
-    @url    = url
+    @url    = "http://www.imdb.com/mymovies/list?l=#{id}"
   end
   
   # Fetches movies for the given URL.
   # Raises an exception if the url is invalid.
-  # Returns and ImdbVoteHistory object.
+  # Returns an ImdbVoteHistory object.
+  # Must be valid, otherwise an argument error will be raised.
+  # Example on valid URL:
+  # => http://www.imdb.com/mymovies/list?l=32558051
   def self.find_by_url(url)
-    ImdbVoteHistory.new(url)
+    raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
+    ImdbVoteHistory.new(url.match(/list\?l=(\d+)/).to_a[1])
   end
   
   # Fetches movies for the given ID.
-  # Raises an exception if the url is invalid.
-  # Returns and ImdbVoteHistory object.
+  # Returns an ImdbVoteHistory object.
   def self.find_by_id(id)
-    find_by_url("http://www.imdb.com/mymovies/list?l=#{id}")
+    ImdbVoteHistory.new(id)
   end
   
   # The owners username, nil if the page doesn't exists.
