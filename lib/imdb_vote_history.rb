@@ -12,10 +12,9 @@ class ImdbVoteHistory
   end
   
   # Fetches movies for the given URL.
-  # Raises an exception if the url is invalid.
   # Returns an ImdbVoteHistory object.
-  # Must be valid, otherwise an argument error will be raised.
-  # Example on valid URL:
+  # The URL must be valid, otherwise an argument error will be raised.
+  # Example of valid URL:
   # => http://www.imdb.com/mymovies/list?l=32558051
   def self.find_by_url(url)
     raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
