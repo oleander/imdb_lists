@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["linus@oleande.nu"]
   s.homepage    = "https://github.com/oleander/imdb_vote_history"
   s.summary     = %q{Get easy access to any public IMDb vote history list using Ruby}
-  s.description = %q{Get easy access to any public IMDb vote history list. Extract information from each movie like; title, release date, rating, actors.}
+  s.description = %q{Get easy access to any public IMDb vote history list. Extract information from each movie like; title, release date, rating, actors}
 
   s.rubyforge_project = "imdb_vote_history"
 
