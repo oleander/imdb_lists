@@ -24,6 +24,7 @@ class ImdbVoteHistory
   # Fetches movies for the given ID.
   # Returns an ImdbVoteHistory object.
   def self.find_by_id(id)
+    raise ArgumentError.new("The id #{id} is invalid") unless id.to_s.match(/^\d{2,}$/)
     ImdbVoteHistory.new(id)
   end
   

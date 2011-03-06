@@ -96,6 +96,12 @@ describe ImdbVoteHistory do
         lambda { ImdbVoteHistory.find_by_id(id) }.should_not raise_error(ArgumentError)
       end
     end
+    
+    it "should not be possible to pass nil or n <= 9" do
+     ["0", nil, "1", "string", "9"].each do |id|
+        lambda { ImdbVoteHistory.find_by_id(id) }.should raise_error(ArgumentError)
+      end
+    end
   end
   
   context "the find_by_url method" do
