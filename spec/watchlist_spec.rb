@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ImdbLists do
+describe ImdbLists::Watchlist do
   before(:all) do
     @url          = "http://www.imdb.com/list/2BZy80bxY2U"
     @id           = "2BZy80bxY2U"
@@ -84,22 +84,14 @@ describe ImdbLists do
       @ivh.id.should eq("2BZy80bxY2U")
     end
   end
-  # 
-  # context "the find_by_id method" do
-  #   it "should be possible to pass an id" do
-  #     ["32558051", 32558051].each do |id|
-  #       ImdbLists::History.should_receive(:new).with(id)
-  #       lambda { ImdbLists::find_by_id(id) }.should_not raise_error(ArgumentError)
-  #     end
-  #   end
-  #   
-  #   it "should not be possible to pass nil or n <= 9" do
-  #    ["0", nil, "1", "string", "9"].each do |id|
-  #       lambda { ImdbLists::find_by_id(id) }.should raise_error(ArgumentError)
-  #     end
-  #   end
-  # end
-  # 
+  
+  context "the find_by_id method" do
+    it "should be possible to pass an id" do
+      ImdbLists::Watchlist.should_receive(:new).with("2BZy80bxY2U")
+      lambda { ImdbLists::find_by_id("2BZy80bxY2U") }.should_not raise_error(ArgumentError)
+    end
+  end
+  
   # context "the find_by_url method" do
   #   it "should raise an error if the url is invalid" do
   #     ImdbLists::History.should_not_receive(:new)

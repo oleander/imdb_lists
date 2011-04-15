@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ImdbLists do
+describe ImdbLists::History do
   before(:all) do
     @url          = "http://www.imdb.com/mymovies/list?l=32558051"
     @id           = "32558051" 
@@ -100,7 +100,7 @@ describe ImdbLists do
     end
     
     it "should not be possible to pass nil or n <= 9" do
-     ["0", nil, "1", "string", "9"].each do |id|
+     ["0", nil, "1", "9"].each do |id|
         lambda { ImdbLists::find_by_id(id) }.should raise_error(ArgumentError)
       end
     end

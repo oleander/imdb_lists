@@ -19,7 +19,12 @@ module ImdbLists
   # Fetches movies for the given ID.
   # Returns an ImdbVoteHistory object.
   def self.find_by_id(id)
-    raise ArgumentError.new("The id #{id} is invalid") unless id.to_s.match(/^\d{2,}$/)
-    ImdbLists::History.new(id)
+    if id.to_s.match(/^\d{2,}$/)
+      ImdbLists::History.new(id)
+    elsif id.to_s.match(/^\w{2,}$/)
+      ImdbLists::Watchlist.new(id)
+    else
+      raise ArgumentError.new("The id #{id} is invalid")
+    end
   end
 end
