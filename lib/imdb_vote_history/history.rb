@@ -14,11 +14,9 @@ module ImdbLists
   
     # The owners username, nil if the page doesn't exists.
     def user
-      begin
-        content.at_css(".blurb a:nth-child(1)").content
-      rescue NoMethodError
-        nil # The default value if no user i found
-      end
+      content.at_css(".blurb a:nth-child(1)").content
+    rescue NoMethodError
+      nil # The default value if no user i found
     end
   
     # A unique id for this particular list.
