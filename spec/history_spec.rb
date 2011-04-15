@@ -1,4 +1,6 @@
-describe ImdbVoteHistory do
+require "spec_helper"
+
+describe ImdbLists do
   before(:all) do
     @url          = "http://www.imdb.com/mymovies/list?l=32558051"
     @id           = "32558051" 
@@ -22,7 +24,7 @@ describe ImdbVoteHistory do
   end
   
   before(:each) do
-    @ivh = ImdbVoteHistory.new(@id)
+    @ivh = ImdbLists::History.new(@id)
   end
   
   context "200 success" do
@@ -92,41 +94,31 @@ describe ImdbVoteHistory do
   context "the find_by_id method" do
     it "should be possible to pass an id" do
       ["32558051", 32558051].each do |id|
-        ImdbVoteHistory.should_receive(:new).with(id)
-        lambda { ImdbVoteHistory.find_by_id(id) }.should_not raise_error(ArgumentError)
+        ImdbLists::History.should_receive(:new).with(id)
+        lambda { ImdbLists::find_by_id(id) }.should_not raise_error(ArgumentError)
       end
     end
     
     it "should not be possible to pass nil or n <= 9" do
      ["0", nil, "1", "string", "9"].each do |id|
-        lambda { ImdbVoteHistory.find_by_id(id) }.should raise_error(ArgumentError)
+        lambda { ImdbLists::find_by_id(id) }.should raise_error(ArgumentError)
       end
     end
   end
   
   context "the find_by_url method" do
     it "should raise an error if the url is invalid" do
-      ImdbVoteHistory.should_not_receive(:new)
+      ImdbLists::History.should_not_receive(:new)
       @invalid_urls.each do |url|
-        lambda { ImdbVoteHistory.find_by_url(url) }.should raise_error(ArgumentError)
+        lambda { ImdbLists::find_by_url(url) }.should raise_error(ArgumentError)
       end
     end
     
     it "should not raise an error if the url is valid" do
-      ImdbVoteHistory.should_receive(:new).with("1234").exactly(@valid_urls.length).times
+      ImdbLists::History.should_receive(:new).with("1234").exactly(@valid_urls.length).times
       @valid_urls.each do |url|
-        lambda { ImdbVoteHistory.find_by_url(url) }.should_not raise_error(ArgumentError)
+        lambda { ImdbLists::find_by_url(url) }.should_not raise_error(ArgumentError)
       end
-    end
-  end
-  
-  context "watchlist" do
-    before(:each) do
-      @url = "http://www.imdb.com/list/2BZy80bxY2U/?view=compact&sort=listorian:asc"
-    end
-    
-    it "should not raise an error when a watchlist list being passed" do
-      lambda { ImdbVoteHistory.find_by_url(@url) }.should_not raise_error(ArgumentError)
     end
   end
 end
