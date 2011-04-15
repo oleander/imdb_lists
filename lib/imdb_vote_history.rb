@@ -17,7 +17,9 @@ class ImdbVoteHistory
   # Example of valid URL:
   # => http://www.imdb.com/mymovies/list?l=32558051
   def self.find_by_url(url)
-    raise ArgumentError.new("The url #{url} is invalid") unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
+    unless matchers.map{ |reg| url.to_s.match(reg) }.any?
+      raise ArgumentError.new("The url #{url} is invalid")
+    end
     ImdbVoteHistory.new(url.match(/list\?l=(\d+)/).to_a[1])
   end
   
@@ -53,6 +55,9 @@ class ImdbVoteHistory
     prepare! unless @movies.any?; @movies
   end
   
+  def self.matchers
+    [/imdb\.com\/mymovies\/list\?l=\d{2,}$/, /\.imdb\.com\/list\/\w+/i]
+  end
   private
     def prepare!
       movies = []; content.css("td.standard a").each do |movie|

@@ -119,4 +119,14 @@ describe ImdbVoteHistory do
       end
     end
   end
+  
+  context "watchlist" do
+    before(:each) do
+      @url = "http://www.imdb.com/list/2BZy80bxY2U/?view=compact&sort=listorian:asc"
+    end
+    
+    it "should not raise an error when a watchlist list being passed" do
+      lambda { ImdbVoteHistory.find_by_url(@url) }.should_not raise_error(ArgumentError)
+    end
+  end
 end
