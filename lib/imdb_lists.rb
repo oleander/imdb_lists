@@ -2,6 +2,7 @@ require "nokogiri"
 require "rest-client"
 require "imdb_lists/container"
 require "imdb_lists/history"
+require "imdb_lists/watchlist"
 
 module ImdbLists  
   # Fetches movies for the given URL.
