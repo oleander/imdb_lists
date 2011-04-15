@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Linus Oleander"]
   s.email       = ["linus@oleander.nu"]
   s.homepage    = "https://github.com/oleander/imdb_lists"
-  s.summary     = %q{Get easy access to any public IMDb vote history list using Ruby}
-  s.description = %q{Get easy access to any public IMDb vote history list. Extract information from each movie like; title, release date, rating, actors}
+  s.summary     = %q{Get easy access to any public IMDb list}
+  s.description = %q{Get easy access to any public IMDb list, such as; Watchlists and Vote history lists. Extract information from each movie like; title, release date, rating, actors}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
