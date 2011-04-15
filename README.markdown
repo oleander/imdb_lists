@@ -1,17 +1,15 @@
-# IMDb Vote History
+# IMDb Lists
 
-Get easy access to any public [IMDb](http://www.imdb.com/) vote history list using Ruby.
-
-[Here](http://www.imdb.com/mymovies/list?l=19736607) is an example.
+Get easy access to any public [IMDb](http://www.imdb.com/) [vote history list](http://www.imdb.com/mymovies/list?l=19736607) and [watchlist](http://www.imdb.com/list/2BZy80bxY2U) using Ruby.
 
 ## How to use
 
 ### Find by url
 
     $ require 'rubygems'
-    $ require 'imdb_vote_history'
+    $ require 'imdb_lists'
     
-    $ result = ImdbVoteHistory.find_by_url("http://www.imdb.com/mymovies/list?l=32558051")
+    $ result = ImdbLists::find_by_url("http://www.imdb.com/mymovies/list?l=32558051")
     
     $ result.movies.count
     >> 937
@@ -22,9 +20,6 @@ Get easy access to any public [IMDb](http://www.imdb.com/) vote history list usi
     $ result.movies.last.title
     >> "The Last Man on Earth"
     
-    $ result.class
-    >> ImdbVoteHistory
-    
     $ result.movies.first.class
     >> Container::Movie
     
@@ -33,23 +28,20 @@ Get easy access to any public [IMDb](http://www.imdb.com/) vote history list usi
     
 ### Find by id
 
-    $ result = ImdbVoteHistory.find_by_id("32558051")
+    $ result = ImdbLists::find_by_id("32558051")
     
     $ result.movies.count
     >> 937
     
 ## Data to work with
 
-### The ImdbVoteHistory class
-
-The `find_by_url` and `find_by_id` methods returns an `ImdbVoteHistory` instance.
-
-The object it self has a few accessors that might be useful.
+### Accessors
 
 - **user** (String) Owner of the list.
-- **id** (Fixnum) A unique id for the list.
-- **url** (String) Full URL to the IMDb vote history list that was parsed.
-- **movies** (Array<Container::Movie>) A list of movies containing `Container::Movie` instances.
+- **id** (Fixnum or String) A unique id for the list.
+- **url** (String) Full URL to the IMDb list itself.
+- **movies** (Array[Container::Movie]) A list of movies containing `Container::Movie` instances.
+- **title** (String) Title of the watchlist.
 
 ### The Container::Movie class
 
@@ -65,15 +57,15 @@ You can, as said above, use any method that `ImdbParty::Movie` provides directly
 
 ## How do install
 
-    [sudo] gem install imdb_vote_history
+    [sudo] gem install imdb_lists
     
 ## How to use it in a rails 3 project
 
-Add `gem 'imdb_vote_history'` to your Gemfile and run `bundle`.
+Add `gem 'imdb_lists'` to your Gemfile and run `bundle`.
 
 ## Requirements
 
-*IMDb Vote History* is tested in OS X 10.6.6 using Ruby 1.9.2 and 1.8.7.
+*IMDb Lists* is tested in OS X 10.6.6 using Ruby 1.9.2 and 1.8.7.
 
 ## Thanks to
 
@@ -81,4 +73,4 @@ Add `gem 'imdb_vote_history'` to your Gemfile and run `bundle`.
 
 ## License
 
-*IMDb Vote History* is released under the MIT license.
+*IMDb Lists* is released under the MIT license.
