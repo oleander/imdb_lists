@@ -1,7 +1,7 @@
 require "nokogiri"
 require "rest-client"
-require "imdb_vote_history/container"
-require "imdb_vote_history/history"
+require "imdb_lists/container"
+require "imdb_lists/history"
 
 module ImdbLists  
   # Fetches movies for the given URL.
@@ -9,11 +9,16 @@ module ImdbLists
   # The URL must be valid, otherwise an argument error will be raised.
   # Example of valid URL:
   # => http://www.imdb.com/mymovies/list?l=32558051
+  # => http://www.imdb.com/list/2BZy80bxY2U
   def self.find_by_url(url)
-    unless url.to_s.match(/^(http:\/\/)?(w{3}\.)?imdb\.com\/mymovies\/list\?l=\d{2,}$/)
+    url = url.to_s
+    if url =~ /imdb\.com\/mymovies\/list\?l=(\d{2,})/i
+      ImdbLists::History.new($1)
+    elsif url =~ /imdb\.com\/list\/([^\/]+)/i
+      ImdbLists::Watchlist.new($1)
+    else
       raise ArgumentError.new("The url #{url} is invalid")
     end
-    ImdbLists::History.new(url.match(/list\?l=(\d+)/).to_a[1])
   end
   
   # Fetches movies for the given ID.

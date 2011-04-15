@@ -1,6 +1,6 @@
 require "nokogiri"
 require "rest-client"
-require "imdb_vote_history/container"
+require "imdb_lists/container"
 
 module ImdbLists
   class History

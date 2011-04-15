@@ -5,12 +5,8 @@ describe ImdbLists::Watchlist do
     @url          = "http://www.imdb.com/list/2BZy80bxY2U"
     @id           = "2BZy80bxY2U"
     @count        = 79
-    @full_url     = "http://www.imdb.com/list/2BZy80bxY2U/?view=compact&sort=listorian:asc" 
+    @full_url     = "http://www.imdb.com/list/2BZy80bxY2U/?view=compact&sort=listorian:asc"
   end
-  
-  # after(:each) do
-  #   WebMock.reset!
-  # end
   
   before(:each) do
     @ivh = ImdbLists::Watchlist.new(@id)
@@ -92,19 +88,11 @@ describe ImdbLists::Watchlist do
     end
   end
   
-  # context "the find_by_url method" do
-  #   it "should raise an error if the url is invalid" do
-  #     ImdbLists::History.should_not_receive(:new)
-  #     @invalid_urls.each do |url|
-  #       lambda { ImdbLists::find_by_url(url) }.should raise_error(ArgumentError)
-  #     end
-  #   end
-  #   
-  #   it "should not raise an error if the url is valid" do
-  #     ImdbLists::History.should_receive(:new).with("1234").exactly(@valid_urls.length).times
-  #     @valid_urls.each do |url|
-  #       lambda { ImdbLists::find_by_url(url) }.should_not raise_error(ArgumentError)
-  #     end
-  #   end
-  # end
+  context "the find_by_url method" do    
+    it "should not raise an error if the url is valid" do
+      ImdbLists::Watchlist.should_receive(:new).exactly(2).times.with("2BZy80bxY2U")
+      lambda { ImdbLists::find_by_url(@full_url) }.should_not raise_error(ArgumentError)
+      lambda { ImdbLists::find_by_url(@url) }.should_not raise_error(ArgumentError)
+    end
+  end
 end

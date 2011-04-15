@@ -1,15 +1,16 @@
 require "nokogiri"
 require "rest-client"
-require "imdb_vote_history/container"
+require "imdb_lists/container"
 
 module ImdbLists
   class Watchlist
-    attr_reader :url
+    attr_reader :url, :id
   
     # Ingoing argument is the id to fetch movies from.
     def initialize(id)
       @movies = []
       @url    = "http://www.imdb.com/list/#{id}"
+      @id = id
     end
   
     # The owners username, nil if the page doesn't exists.
@@ -21,12 +22,6 @@ module ImdbLists
     
     def title
       content.at_css("h1").content
-    end
-    
-    # A unique id for this particular list.
-    # Return type is Fixnum.
-    def id
-      inner_url.match(/list\/([^\/]+)/i).to_a[1]
     end
     
     # Returns a list of movies of the Container::Movie type.
