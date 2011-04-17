@@ -8,10 +8,6 @@ module ImdbLists
       @errors == true ? raise(error) : warn("Error: #{error}, Where: #{error.backtrace.first}")
     end
     
-    def inner_url
-      not_implemented
-    end
-    
     def content
       @content ||= Nokogiri::HTML(download)
     end
@@ -20,13 +16,16 @@ module ImdbLists
       prepare! unless @movies.any?; @movies
     end
     
-    # Returns a list of movies of the Container::Movie type.
+    def errors(boolean)
+      tap { @errors = boolean }
+    end
+    
     def prepare!
       not_implemented
     end
     
-    def errors(boolean)
-      tap { @errors = boolean }
+    def inner_url
+      not_implemented
     end
   end
 end
