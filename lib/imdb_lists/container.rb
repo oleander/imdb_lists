@@ -30,7 +30,7 @@ module Container
     
     def method_missing(method, *args)
       return movie.send(method, *args) if exists? and movie.methods.include?(prepare(method))
-      raise exists? ? NoMethodError.new("Undefined method `#{method}' for #{movie.class}") : ArgumentError.new("The imdb #{imdb_id} is invalid")
+      raise exists? ? NoMethodError.new("Undefined method '#{method}' for #{movie.class}") : ArgumentError.new("The imdb #{imdb_id} is invalid")
     end
     
     private
