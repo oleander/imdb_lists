@@ -1,15 +1,16 @@
 require "nokogiri"
 require "rest-client"
 require "imdb_lists/container"
+require "imdb_lists/base"
 
 module ImdbLists
-  class History
-    attr_reader :url
+  class History < ImdbLists::Base
+    attr_reader :url, :id
   
     # Ingoing argument is the id to fetch movies from.
     def initialize(id)
       @movies = []
-      @url    = "http://www.imdb.com/mymovies/list?l=#{id}"
+      @url    = "http://www.imdb.com/mymovies/list?l=#{@id = id.to_i}"
     end
   
     # The owners username, nil if the page doesn't exists.
@@ -17,22 +18,6 @@ module ImdbLists
       content.at_css(".blurb a:nth-child(1)").content
     rescue NoMethodError
       nil # The default value if no user i found
-    end
-  
-    # A unique id for this particular list.
-    # Return type is Fixnum.
-    def id
-      @url.match(/list\?l=(\d+)/).to_a[1].to_i
-    end
-  
-    # Should we fetch all movies, even though pagination exists?
-    def all
-      @all = self
-    end
-  
-    # Returns a list of movies of the Container::Movie type.
-    def movies
-      prepare! unless @movies.any?; @movies
     end
   
     private
@@ -45,14 +30,6 @@ module ImdbLists
     
       def inner_url
         "#{@url}&a=1"
-      end
-    
-      def download
-        RestClient.get(inner_url, :timeout => 10) rescue ""
-      end
-
-      def content
-        @content ||= Nokogiri::HTML download
       end
   end
 end

@@ -1,16 +1,16 @@
 require "nokogiri"
 require "rest-client"
 require "imdb_lists/container"
+require "imdb_lists/base"
 
 module ImdbLists
-  class Watchlist
+  class Watchlist < ImdbLists::Base
     attr_reader :url, :id
   
     # Ingoing argument is the id to fetch movies from.
     def initialize(id)
+      @url    = "http://www.imdb.com/list/#{@id = id}"
       @movies = []
-      @url    = "http://www.imdb.com/list/#{id}"
-      @id = id
     end
   
     # The owners username, nil if the page doesn't exists.
@@ -24,11 +24,6 @@ module ImdbLists
       @_title ||= content.at_css("h1").content
       @_title == "Newest Lists" ? nil : @_title
     end
-    
-    # Returns a list of movies of the Container::Movie type.
-    def movies
-      prepare! unless @movies.any?; @movies
-    end
   
     private
       def prepare!
@@ -40,16 +35,6 @@ module ImdbLists
     
       def inner_url
         "#{@url}/?view=compact&sort=listorian:asc"
-      end
-    
-      def download
-        RestClient.get(inner_url, :timeout => 10)
-      rescue => error
-        raise error unless false
-      end
-
-      def content
-        @content ||= Nokogiri::HTML(download)
       end
   end
 end
