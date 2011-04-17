@@ -96,6 +96,22 @@ describe ImdbLists::Watchlist do
     end
   end
   
+  context "errors" do
+    before(:each) do
+      stub_request(:get, @full_url).to_return do
+        raise RestClient::Exception
+      end
+    end
+    
+    it "should raise an error" do
+      lambda { @ivh.movies }.should_not raise_error(RestClient::Exception)
+    end
+    
+    it "should be possible to turn of request errors" do
+      lambda { @ivh.errors(true).movies }.should raise_error(RestClient::Exception)
+    end
+  end
+  
   context "redirect" do
     before(:each) do
       stub_request(:get, @full_url).to_return(:body => File.new("spec/fixtures/redirect_watchlist.html"), :status => 200)
