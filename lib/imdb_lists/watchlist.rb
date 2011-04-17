@@ -21,7 +21,8 @@ module ImdbLists
     end
     
     def title
-      content.at_css("h1").content
+      @_title ||= content.at_css("h1").content
+      @_title == "Newest Lists" ? nil : @_title
     end
     
     # Returns a list of movies of the Container::Movie type.

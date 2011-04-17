@@ -65,8 +65,8 @@ describe ImdbLists::Watchlist do
   
   context "non public" do
     before(:each) do
-       stub_request(:get, @full_url).to_return(:body => File.new("spec/fixtures/non_public_watchlist.html"), :status => 200)
-     end
+      stub_request(:get, @full_url).to_return(:body => File.new("spec/fixtures/non_public_watchlist.html"), :status => 200)
+    end
      
     it "should return an empty list" do
       @ivh.should have(0).movies
@@ -93,6 +93,28 @@ describe ImdbLists::Watchlist do
       ImdbLists::Watchlist.should_receive(:new).exactly(2).times.with("2BZy80bxY2U")
       lambda { ImdbLists::find_by_url(@full_url) }.should_not raise_error(ArgumentError)
       lambda { ImdbLists::find_by_url(@url) }.should_not raise_error(ArgumentError)
+    end
+  end
+  
+  context "redirect" do
+    before(:each) do
+      stub_request(:get, @full_url).to_return(:body => File.new("spec/fixtures/redirect_watchlist.html"), :status => 200)
+    end
+    
+    it "should not return any movies" do
+      @ivh.should have(0).movies
+    end
+    
+    it "should find any title" do
+      @ivh.title.should be_nil
+    end
+    
+    it "should still have an id" do
+      @ivh.id.should eq("2BZy80bxY2U")
+    end
+    
+    it "should not have a user" do
+      @ivh.user.should be_nil
     end
   end
 end
