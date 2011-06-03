@@ -76,6 +76,10 @@ describe ImdbLists::Watchlist do
       @ivh.user.should be_nil
     end
     
+    it "should not have a title" do
+      @ivh.title.should be_nil
+    end
+    
     it "should have an id" do
       @ivh.id.should eq("2BZy80bxY2U")
     end

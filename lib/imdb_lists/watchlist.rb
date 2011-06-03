@@ -22,7 +22,7 @@ module ImdbLists
     
     def title
       @_title ||= content.at_css("h1").content
-      @_title == "Newest Lists" ? nil : @_title
+      ["Newest Lists", "Page not found"].include?(@_title) ? nil : @_title
     end
   
     private
