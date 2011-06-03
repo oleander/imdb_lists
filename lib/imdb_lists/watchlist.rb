@@ -23,6 +23,8 @@ module ImdbLists
     def title
       @_title ||= content.at_css("h1").content
       ["Newest Lists", "Page not found"].include?(@_title) ? nil : @_title
+    rescue NoMethodError
+      nil # Default name if not found
     end
   
     private

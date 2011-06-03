@@ -85,6 +85,28 @@ describe ImdbLists::Watchlist do
     end
   end
   
+  context "empty page" do
+    before(:each) do
+       stub_request(:get, @full_url).to_return(:body => "<html></html>", :status => 200)
+     end
+
+     it "should return an empty list" do
+       @ivh.should have(0).movies
+     end
+
+     it "should not have a user" do
+       @ivh.user.should be_nil
+     end
+
+     it "should not have a title" do
+       @ivh.title.should be_nil
+     end
+
+     it "should have an id" do
+       @ivh.id.should eq("2BZy80bxY2U")
+     end
+  end
+  
   context "the find_by_id method" do
     it "should be possible to pass an id" do
       ImdbLists::Watchlist.should_receive(:new).with("2BZy80bxY2U")
