@@ -29,6 +29,10 @@ describe ImdbLists::Watchlist do
       @ivh.title.should eq("My favorite movies of alltime! some of them are so bad, but so f....g brilliant")
     end
     
+    it "should be valid" do
+      @ivh.should be_valid
+    end
+    
     after(:each) do
       a_request(:get, @full_url).should have_been_made
     end
@@ -104,6 +108,10 @@ describe ImdbLists::Watchlist do
 
      it "should have an id" do
        @ivh.id.should eq("2BZy80bxY2U")
+     end
+     
+     it "should not be valid" do
+       @ivh.should_not be_valid
      end
   end
   

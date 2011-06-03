@@ -26,7 +26,11 @@ module ImdbLists
     rescue NoMethodError
       nil # Default name if not found
     end
-  
+    
+    def valid?
+      ! [title, user].any?(&:nil?)
+    end
+    
     private
       def prepare!
         movies = []; content.css(".title a").each do |movie|
