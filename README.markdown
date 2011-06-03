@@ -42,6 +42,7 @@ Get easy access to any public [IMDb](http://www.imdb.com/) [vote history list](h
 - **url** (String) Full URL to the IMDb list itself.
 - **movies** (Array[Container::Movie]) A list of movies containing `Container::Movie` instances.
 - **title** (String) Title of the watchlist.
+- **valid?** (Boolean) Is the data that is being returned valid?
 
 ### The Container::Movie class
 
