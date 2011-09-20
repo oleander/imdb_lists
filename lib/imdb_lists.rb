@@ -4,6 +4,7 @@ require "uri"
 require "titleize"
 require "csv"
 require "time"
+require "imdb_lists/object"
 
 class ImdbLists
   attr_reader :url
@@ -49,20 +50,23 @@ class ImdbLists
   # @return String A url to the CVS file.
   #
   def csv
-    @_csv ||= "http://www.imdb.com" + content.at_css(".export a").attr("href")
+    if csv = content.at_css(".export a").try(:attr, "href")
+      @_csv ||= "http://www.imdb.com%s" % csv
+    end
   end
   
   #
   # @return String Name for the given list.
   #
   def name
-    @_user ||= content.at_css("h1.header").content
+    @_user ||= content.at_css("h1.header").try(:content)
   end
   
   #
   # @return Array<Movie> A list of movies
   #
   def movies
+    return [] unless csv
     vote_list = csv_content.first.count != 15
           
     csv_content[1..-1].map do |movie|

@@ -106,4 +106,34 @@ describe ImdbLists do
     end
   end
   
+  
+  describe "invalid url" do
+    let(:url) { "http://www.imdb.com/list/random/" }
+    use_vcr_cassette "random"
+    
+    before(:each) do
+      @list = ImdbLists.fetch(url)
+    end
+    
+    it "should not have a name" do
+      @list.name.should be_nil
+    end
+    
+    it "should not have csv link" do
+      @list.csv.should be_nil
+    end
+    
+    it "should have 0 movies" do
+      @list.should have(0).movies
+    end
+        
+    it "should be able to cache a request" do
+      2.times { @list.name }
+      a_request(:get, url).should have_been_made.once
+    end
+    
+    it "should be able to return the given url" do
+      @list.url.should eq(url)
+    end
+  end
 end
