@@ -10,7 +10,7 @@ Get easy access to any public [IMDb](http://www.imdb.com/) [movie list](http://w
 require "imdb_lists"
 result = ImdbLists.fetch("http://www.imdb.com/user/ur10777143/ratings")
 
-result.movies.count # => 937
+result.movies.count # => 693
 result.movies.first.title # => Die Hard
 ```
 
@@ -36,7 +36,7 @@ The `movies` method returns a list of movies.
 - **released_at** (Time) When was the movie released?
 - **details** A url to the [IMDb details](http://www.imdb.com/title/tt0095016/) page.
 
-#### Only for **vote lists**
+#### Only for vote lists (like in the example)
 
 - **you_rated** (Fixnum) Your rating, from 0.0 to 10.0.
 - **created_at** When was the movie added to the given list?
