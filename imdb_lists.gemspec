@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency("movie_searcher")
   s.add_dependency("abstract")
   
+  s.add_development_dependency("vcr")
   s.add_development_dependency("rspec")
   s.add_development_dependency("webmock")
 end
