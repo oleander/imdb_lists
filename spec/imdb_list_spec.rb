@@ -70,10 +70,10 @@ describe ImdbLists do
     it "should have a name" do
       @list.name.should eq("Not so good movies...")
     end
-    # 
-    # it "should have csv link" do
-    #   @list.csv.should eq("http://www.imdb.com/list/export?list_id=ratings&author_id=ur10777143")
-    # end
+    
+    it "should have csv link" do
+      @list.csv.should eq("http://www.imdb.com/list/export?list_id=qJi7_i3l25Y&author_id=ur28206273")
+    end
     # 
     # it "should have 693 movies" do
     #   @list.should have(693).movies
