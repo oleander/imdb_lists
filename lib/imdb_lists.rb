@@ -66,10 +66,11 @@ class ImdbLists
   # @return Array<Movie> A list of movies
   #
   def movies
+    return @_movies if @_movies
     return [] unless csv
     vote_list = csv_content.first.count != 15
           
-    csv_content[1..-1].map do |movie|
+    @_movies ||= csv_content[1..-1].map do |movie|
       if vote_list
         create_movie_from_vote_list(movie)
       else

@@ -49,6 +49,10 @@ describe ImdbLists do
       end
     end
     
+    it "should not calculate #movies twice" do
+      @list.movies.should eq(@list.movies)
+    end
+    
     it "should be able to cache a request" do
       2.times { @list.name }
       a_request(:get, url).should have_been_made.once
