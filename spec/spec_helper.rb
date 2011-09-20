@@ -2,9 +2,6 @@ require "rspec"
 require "webmock/rspec"
 require "vcr"
 require "imdb_lists"
-require "imdb_lists/container"
-require "imdb_lists/history"
-require "imdb_lists/watchlist"
 
 WebMock.disable_net_connect!
 
