@@ -44,9 +44,12 @@ describe ImdbLists do
         movie.votes.should > 1
         movie.released_at.should be_instance_of(Time)
         movie.details.should match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/)
-        puts movie.inspect
-        puts "----------"
       end
+    end
+    
+    it "should be able to cache a request" do
+      2.times { @list.name }
+      a_request(:get, "http://www.imdb.com/user/ur10777143/ratings").should have_been_made.once
     end
   end
 end
