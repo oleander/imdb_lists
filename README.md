@@ -34,10 +34,10 @@ The `movies` method returns a list of movies.
 - **genres** (Array< String >) A list of genres.
 - **votes** (Fixnum) The amount of votes.
 - **released_at** (Time) When was the movie released?
-- **details** A url to the [IMDb details](http://www.imdb.com/title/tt0095016/) page.
+- **details** Url to a [IMDb details](http://www.imdb.com/title/tt0095016/) page.
 - **created_at** When was it added to the given list?
 
-#### Only for vote lists (like in the example)
+#### Only for [vote lists](http://www.imdb.com/user/ur10777143/ratings)
 
 - **you_rated** (Fixnum) Your rating, from 0.0 to 10.0.
  
