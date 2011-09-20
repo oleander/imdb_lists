@@ -6,6 +6,8 @@ require "csv"
 require "time"
 
 class ImdbLists
+  attr_reader :url
+  
   def initialize(url)
     @url = url
     @movie = Struct.new(

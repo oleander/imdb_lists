@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe ImdbLists do
+  let(:url) { "http://www.imdb.com/user/ur10777143/ratings" }
+  
   describe "arguments" do
     it "should raise an error if url is invalid" do
       lambda { ImdbLists.fetch("random") }.should raise_error(ArgumentError, "Invalid url")
@@ -15,7 +17,7 @@ describe ImdbLists do
     use_vcr_cassette "ur10777143"
     
     before(:each) do
-      @list = ImdbLists.fetch("http://www.imdb.com/user/ur10777143/ratings")
+      @list = ImdbLists.fetch(url)
     end
     
     it "should have a name" do
@@ -49,7 +51,11 @@ describe ImdbLists do
     
     it "should be able to cache a request" do
       2.times { @list.name }
-      a_request(:get, "http://www.imdb.com/user/ur10777143/ratings").should have_been_made.once
+      a_request(:get, url).should have_been_made.once
+    end
+    
+    it "should be able to return the given url" do
+      @list.url.should eq(url)
     end
   end
 end
