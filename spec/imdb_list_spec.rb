@@ -22,8 +22,12 @@ describe ImdbLists do
       @list.name.should eq("Demon_Hunter777's Ratings")
     end
     
-    it "should have cvs link" do
-      @list.cvs.should eq("http://www.imdb.com/list/export?list_id=ratings&author_id=ur10777143")
+    it "should have csv link" do
+      @list.csv.should eq("http://www.imdb.com/list/export?list_id=ratings&author_id=ur10777143")
+    end
+    
+    it "should have 693 movies" do
+      @list.should have(693).movies
     end
   end
 end
