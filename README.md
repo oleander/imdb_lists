@@ -21,6 +21,7 @@ result.movies.first.title # => Die Hard
 - **name** (String) List name.
 - **url** (String) Full URL to the IMDb list itself.
 - **movies** (Array) A list of movies.
+- **csv** (String) Url to movie CSV file.
 
 ### A movie object
 
