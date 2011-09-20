@@ -1,11 +1,27 @@
 require "nokogiri"
 require "rest-client"
 require "uri"
+require "titleize"
 require "csv"
+require "time"
 
 class ImdbLists
   def initialize(url)
     @url = url
+    @movie = Struct.new(
+      :id, 
+      :created_at, 
+      :title, 
+      :directors, 
+      :you_rated, 
+      :rating, 
+      :runtime, 
+      :year, 
+      :genres, 
+      :votes, 
+      :released_at, 
+      :details
+    )
   end
     
   def self.fetch(url)
@@ -13,14 +29,8 @@ class ImdbLists
     unless this.is_url_valid?
       raise ArgumentError.new("Invalid url")
     end
-    
-    this.fetch_and_parse!
-    
+        
     return this
-  end
-  
-  def fetch_and_parse!
-    # http://www.imdb.com/user/ur10777143/ratings
   end
   
   def csv
@@ -32,7 +42,22 @@ class ImdbLists
   end
   
   def movies
-    csv_content[1..-1]
+    csv_content[1..-1].map do |movie|
+      @movie.new(
+      movie[1],
+      parse_time(movie[2]),
+      movie[5].titleize,
+      movie[7].split(", "),
+      movie[8].to_f,
+      movie[9].to_f,
+      movie[10].to_i,
+      movie[11].to_i,
+      movie[12].split(", ").map(&:titleize),
+      movie[13].to_i,
+      parse_time(movie[14]),
+      movie[15]
+      )
+    end
   end
   
   def is_url_valid?
@@ -41,6 +66,16 @@ class ImdbLists
   
   private
   
+    def parse_time(time)
+      if time =~ /^(\d{4})$/
+        return Time.parse("#{$1}-01-01")
+      elsif time =~ /(\d{4}-\d{2})/
+        return Time.parse("#{$1}-01")
+      end
+      
+      Time.parse(time)
+    end
+    
     def csv_raw
       @_csv_raw ||= RestClient.get(csv, timeout: 10)
     end

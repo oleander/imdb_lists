@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   
   s.add_dependency("rest-client")
   s.add_dependency("nokogiri")
-  s.add_dependency("movies")
+  s.add_dependency("titleize")
   
   s.add_development_dependency("vcr")
   s.add_development_dependency("rspec")

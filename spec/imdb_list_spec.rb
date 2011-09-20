@@ -29,5 +29,24 @@ describe ImdbLists do
     it "should have 693 movies" do
       @list.should have(693).movies
     end
+    
+    it "should have a list of movies" do
+      @list.movies.each do |movie|
+        movie.id.should match(/tt\d{7}/)
+        movie.created_at.should be_instance_of(Time)
+        movie.title.should_not be_empty
+        movie.directors.should be_instance_of(Array)
+        movie.you_rated.should be_between(0, 10)
+        movie.rating.should be_between(0, 10)
+        movie.runtime.should >= 0
+        movie.year.should > 1900
+        movie.genres.map(&:titleize).should eq(movie.genres)
+        movie.votes.should > 1
+        movie.released_at.should be_instance_of(Time)
+        movie.details.should match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/)
+        puts movie.inspect
+        puts "----------"
+      end
+    end
   end
 end
