@@ -35,11 +35,11 @@ The `movies` method returns a list of movies.
 - **votes** (Fixnum) The amount of votes.
 - **released_at** (Time) When was the movie released?
 - **details** A url to the [IMDb details](http://www.imdb.com/title/tt0095016/) page.
+- **created_at** When was it added to the given list?
 
 #### Only for vote lists (like in the example)
 
 - **you_rated** (Fixnum) Your rating, from 0.0 to 10.0.
-- **created_at** When was the movie added to the given list?
  
 ## How do install
 

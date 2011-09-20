@@ -474,3 +474,77 @@
       1HVZXNc0AcusMK9/bvN/qlqhM8DtS9ykwo25/18AAAAA//8DAPNx65FtnQEA
 
     http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: http://www.imdb.com:80/list/export?author_id=ur28206273&list_id=qJi7_i3l25Y
+    body: 
+    headers: 
+      accept: 
+      - "*/*; q=0.5, application/xml"
+      accept-encoding: 
+      - gzip, deflate
+      timeout: 
+      - "10"
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+      - Tue, 20 Sep 2011 21:22:49 GMT
+      server: 
+      - Server
+      cache-control: 
+      - private
+      content-disposition: 
+      - attachment; filename="Not so good movies....csv"
+      cneonction: 
+      - close
+      content-type: 
+      - text/csv
+      set-cookie: 
+      - session-id-time=1474233769;path=/;domain=.imdb.com;expires=Sun, 18 Sep 2016 14:22:49 GMT
+      - session-id=172-6553769-9912064;path=/;domain=.imdb.com;expires=Sun, 18 Sep 2016 14:22:49 GMT
+      - uu=BCYoLYarEEQfTR1fAwtRLzJfbwh4wDaFOivXV_WEmkd8Q04TRCizTDCCu_ujy7xCIqHI5sPMNQfvhCXagm5c0GZPUTGvbEa-Lqg8-87uvtuOADlLhZc-htCj8DCuy-8-o3IbHHJadEO8ABHi9yXe96bzG7gKYqwbg-BQ1ysqCP2jj0YjzsPqMjK6SCIkqDTcZ41YLsYrKwwr0IqlvnCizv8DhxPeLadP1zDaITLJFvD-5Ag;expires=Thu, 30 Dec 2037 00:00:00 GMT;path=/;domain=.imdb.com
+      vary: 
+      - Accept-Encoding,User-Agent
+      content-encoding: 
+      - gzip
+      p3p: 
+      - policyref="http://i.imdb.com/images/p3p.xml",CP="CAO DSP LAW CUR ADM IVAo IVDo CONo OTPo OUR DELi PUBi OTRi BUS PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA HEA PRE LOC GOV OTC "
+      transfer-encoding: 
+      - chunked
+    body: !binary |
+      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
+
+    http_version: "1.1"

@@ -74,36 +74,36 @@ describe ImdbLists do
     it "should have csv link" do
       @list.csv.should eq("http://www.imdb.com/list/export?list_id=qJi7_i3l25Y&author_id=ur28206273")
     end
-    # 
-    # it "should have 693 movies" do
-    #   @list.should have(693).movies
-    # end
-    # 
-    # it "should have a list of movies" do
-    #   @list.movies.each do |movie|
-    #     movie.id.should match(/tt\d{7}/)
-    #     movie.created_at.should be_instance_of(Time)
-    #     movie.title.should_not be_empty
-    #     movie.directors.should be_instance_of(Array)
-    #     movie.you_rated.should be_between(0, 10)
-    #     movie.rating.should be_between(0, 10)
-    #     movie.runtime.should >= 0
-    #     movie.year.should > 1900
-    #     movie.genres.map(&:titleize).should eq(movie.genres)
-    #     movie.votes.should > 1
-    #     movie.released_at.should be_instance_of(Time)
-    #     movie.details.should match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/)
-    #   end
-    # end
-    # 
-    # it "should be able to cache a request" do
-    #   2.times { @list.name }
-    #   a_request(:get, url).should have_been_made.once
-    # end
-    # 
-    # it "should be able to return the given url" do
-    #   @list.url.should eq(url)
-    # end
+    
+    it "should have 17 movies" do
+      @list.should have(17).movies
+    end
+    
+    it "should have a list of movies" do
+      @list.movies.each do |movie|
+        movie.id.should match(/tt\d{7}/)
+        movie.created_at.should be_instance_of(Time)
+        movie.title.should_not be_empty
+        movie.directors.should be_instance_of(Array)
+        movie.you_rated.should be_nil
+        movie.rating.should be_between(0, 10)
+        movie.runtime.should >= 0
+        movie.year.should > 1900
+        movie.genres.map(&:titleize).should eq(movie.genres)
+        movie.votes.should > 1
+        movie.released_at.should be_instance_of(Time)
+        movie.details.should match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/)
+      end
+    end
+    
+    it "should be able to cache a request" do
+      2.times { @list.name }
+      a_request(:get, url).should have_been_made.once
+    end
+    
+    it "should be able to return the given url" do
+      @list.url.should eq(url)
+    end
   end
   
 end

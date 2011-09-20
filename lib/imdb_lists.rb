@@ -44,21 +44,15 @@ class ImdbLists
   end
   
   def movies
+    ["position", "const", "created", "modified", "description", "Title", "Title type", "Directors", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num. Votes", "Release Date (month/day/year)", "URL"]
+    vote_list = csv_content.first.count != 15
+          
     csv_content[1..-1].map do |movie|
-      @movie.new(
-      movie[1],
-      parse_time(movie[2]),
-      movie[5].titleize,
-      movie[7].split(", "),
-      movie[8].to_f,
-      movie[9].to_f,
-      movie[10].to_i,
-      movie[11].to_i,
-      movie[12].split(", ").map(&:titleize),
-      movie[13].to_i,
-      parse_time(movie[14]),
-      movie[15]
-      )
+      if vote_list
+        create_movie_from_vote_list(movie)
+      else
+        create_movie_from_regular_list(movie)
+      end
     end
   end
   
@@ -76,6 +70,40 @@ class ImdbLists
       end
       
       Time.parse(time)
+    end
+    
+    def create_movie_from_regular_list(movie)
+      @movie.new(
+      movie[1],                                 # id
+      parse_time(movie[2]),                     # created_at
+      movie[5].titleize,                        # title
+      movie[7].split(", "),                     # directors
+      nil,                                      # you_rated
+      movie[8].to_f,                            # rating
+      movie[9].to_i,                            # runtime
+      movie[10].to_i,                           # year
+      movie[11].split(", ").map(&:titleize),    # genres
+      movie[12].to_i,                           # votes
+      parse_time(movie[13]),                    # released_at
+      movie[14]                                 # details
+      )
+    end
+    
+    def create_movie_from_vote_list(movie)
+      @movie.new(
+      movie[1],                                 # id
+      parse_time(movie[2]),                     # created_at
+      movie[5].titleize,                        # title
+      movie[7].split(", "),                     # directors
+      movie[8].to_f,                            # you_rated
+      movie[9].to_f,                            # rating
+      movie[10].to_i,                           # runtime
+      movie[11].to_i,                           # year
+      movie[12].split(", ").map(&:titleize),    # genres
+      movie[13].to_i,                           # votes
+      parse_time(movie[14]),                    # released_at
+      movie[15]                                 # details
+      )
     end
     
     def csv_raw
