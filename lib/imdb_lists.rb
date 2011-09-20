@@ -8,6 +8,10 @@ require "time"
 class ImdbLists
   attr_reader :url
   
+  #
+  # @url String A valid IMDb list url
+  # Like this; http://www.imdb.com/list/qJi7_i3l25Y/
+  #
   def initialize(url)
     @url = url
     @movie = Struct.new(
@@ -25,7 +29,13 @@ class ImdbLists
       :details
     )
   end
-    
+  
+  #
+  # @url String A valid IMDb list url.
+  # @return ImdbLists object.
+  # Like this; http://www.imdb.com/list/qJi7_i3l25Y/
+  # Raises an ArgumentError if the given url is invalid. 
+  #
   def self.fetch(url)
     this = ImdbLists.new(url)
     unless this.is_url_valid?
@@ -35,16 +45,24 @@ class ImdbLists
     return this
   end
   
+  #
+  # @return String A url to the CVS file.
+  #
   def csv
     @_csv ||= "http://www.imdb.com" + content.at_css(".export a").attr("href")
   end
   
+  #
+  # @return String Name for the given list.
+  #
   def name
     @_user ||= content.at_css("h1.header").content
   end
   
+  #
+  # @return Array<Movie> A list of movies
+  #
   def movies
-    ["position", "const", "created", "modified", "description", "Title", "Title type", "Directors", "IMDb Rating", "Runtime (mins)", "Year", "Genres", "Num. Votes", "Release Date (month/day/year)", "URL"]
     vote_list = csv_content.first.count != 15
           
     csv_content[1..-1].map do |movie|
@@ -56,12 +74,22 @@ class ImdbLists
     end
   end
   
+  #
+  # Is @url a valid url?
+  # @return Boolean Valid?
+  #
   def is_url_valid?
     !! @url.to_s.match(url_validator)
   end
   
   private
-  
+    #
+    # Trying to parse the given string {time}
+    # IMDb sometimes returns a strange string
+    # This is why this method exists
+    # @time String Should be parseable by Time.parse
+    # @return Time An time object
+    #
     def parse_time(time)
       if time =~ /^(\d{4})$/
         return Time.parse("#{$1}-01-01")
@@ -72,6 +100,12 @@ class ImdbLists
       Time.parse(time)
     end
     
+    #
+    # Converting the given list of values to a movie object
+    # This is for a regular list; http://www.imdb.com/list/qJi7_i3l25Y/
+    # @movie Array<String> A list of values
+    # @return A Struct Movie object.
+    #
     def create_movie_from_regular_list(movie)
       @movie.new(
       movie[1],                                 # id
@@ -89,6 +123,12 @@ class ImdbLists
       )
     end
     
+    #
+    # Converting the given list of values to a movie object
+    # This is for a vote history list; http://www.imdb.com/user/ur10777143/ratings
+    # @movie Array<String> A list of values
+    # @return A Struct Movie object.
+    #
     def create_movie_from_vote_list(movie)
       @movie.new(
       movie[1],                                 # id
@@ -106,16 +146,16 @@ class ImdbLists
       )
     end
     
+    def url_validator
+      /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/
+    end
+    
     def csv_raw
       @_csv_raw ||= RestClient.get(csv, timeout: 10)
     end
     
     def csv_content
       @_csv_content ||= CSV.parse(csv_raw)
-    end
-    
-    def url_validator
-      /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/
     end
     
     def content
