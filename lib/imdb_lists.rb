@@ -27,7 +27,8 @@ class ImdbLists
       :genres, 
       :votes, 
       :released_at, 
-      :details
+      :details,
+      :order
     )
   end
   
@@ -124,7 +125,8 @@ class ImdbLists
       movie[11].split(", ").map(&:titleize),    # genres
       movie[12].to_i,                           # votes
       parse_time(movie[13]),                    # released_at
-      movie[14]                                 # details
+      movie[14],                                # details
+      movie[0].to_i                             # order
       )
     end
     
@@ -147,7 +149,8 @@ class ImdbLists
       movie[12].split(", ").map(&:titleize),    # genres
       movie[13].to_i,                           # votes
       parse_time(movie[14]),                    # released_at
-      movie[15]                                 # details
+      movie[15],                                # details
+      movie[0].to_i                             # order
       )
     end
     

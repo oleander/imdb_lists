@@ -33,7 +33,7 @@ describe ImdbLists do
     end
     
     it "should have a list of movies" do
-      @list.movies.each do |movie|
+      @list.movies.each_with_index do |movie, index|
         movie.id.should match(/tt\d{7}/)
         movie.created_at.should be_instance_of(Time)
         movie.title.should_not be_empty
@@ -46,6 +46,7 @@ describe ImdbLists do
         movie.votes.should > 1
         movie.released_at.should be_instance_of(Time)
         movie.details.should match(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/)
+        movie.order.should eq(index + 1)
       end
     end
     
